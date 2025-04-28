@@ -22,13 +22,21 @@ public class BooksController {
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return booksDao.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = booksDao.getAllBooks();
+        if (books.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/author/{author}")
-    public List<Book> getBooksByAuthor(@PathVariable String author) {
-        return booksDao.getBooksByAuthor(author);
+    public ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable String author) {
+        List<Book> books = booksDao.getBooksByAuthor(author);
+        if (books.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/category/{category}")
@@ -41,12 +49,20 @@ public class BooksController {
     }
 
     @GetMapping("/language/{language}")
-    public List<Book> getBooksByLanguage(@PathVariable String language) {
-        return booksDao.getBooksByLanguage(language);
+    public ResponseEntity<List<Book>> getBooksByLanguage(@PathVariable String language) {
+        List<Book> books = booksDao.getBooksByLanguage(language);
+        if (books.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/search")
-    public List<Book> searchBooks(@RequestParam String query) {
-        return booksDao.searchBooks(query);
+    public ResponseEntity<List<Book>> searchBooks(@RequestParam String query) {
+        List<Book> books = booksDao.searchBooks(query);
+        if (books.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(books);
     }
 }
