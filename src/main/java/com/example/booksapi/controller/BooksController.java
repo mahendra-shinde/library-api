@@ -32,8 +32,12 @@ public class BooksController {
     }
 
     @GetMapping("/category/{category}")
-    public List<Book> getBooksByCategory(@PathVariable String category) {
-        return booksDao.getBooksByCategory(category);
+    public ResponseEntity<List<Book>> getBooksByCategory(@PathVariable String category) {
+        List<Book> books = booksDao.getBooksByCategory(category);
+        if (books.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/language/{language}")
